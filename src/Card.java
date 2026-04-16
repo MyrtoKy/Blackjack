@@ -25,16 +25,11 @@ public class Card {
     //A is 10 or 11 (implemented in Deck class)
     //everything else is as is
     public int getValue() {
-        switch (rank) {
-            case "J":
-            case "Q":
-            case "K":
-                return 10;
-            case "A":
-               return 11;
-             default:
-                return Integer.parseInt(rank);
-        }
+        return switch (rank) {
+            case "J", "Q", "K" -> 10;
+            case "A" -> 11;
+            default -> Integer.parseInt(rank);
+        };
     }   
 
     @Override
