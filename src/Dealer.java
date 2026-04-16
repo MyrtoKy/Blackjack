@@ -15,7 +15,7 @@ public class Dealer {
 
     public void playTurn(Deck deck) {
     while (hand.getTotalValue() < 17) {
-        hand.getCard(deck.dealCard());
+        hand.addCard(deck.dealCard());
     }
 }
 }
