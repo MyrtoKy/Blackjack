@@ -19,19 +19,21 @@ public class Game {
 
         // first card is dealt to the player
         player.getHand().addCard(deck.dealCard());
+        System.out.println("Your first card: " + player.getHand());
 
         // next card goes to the dealer and is revealed
         dealer.getHand().addCard(deck.dealCard());
+        System.out.println("Dealer's card: " + dealer.getHand());
 
         // player gets second card
         player.getHand().addCard(deck.dealCard());
+        System.out.println("Your second card: " + player.getHand());
 
         // dealer gets hidden second card
         dealer.getHand().addCard(deck.dealCard());
 
         // print hands
-        System.out.println("Your hand: " + player.getHand());
-        System.out.println("Dealer has: " + dealer.getHand());
+        System.out.println("You have a total of: " + player.getHand().getTotalValue());
 
         System.out.println(checkForNatural());
 
@@ -53,7 +55,7 @@ public class Game {
 
         // dealer plays
         dealer.playTurn(deck);
-        System.out.println("Dealer final hand: " + dealer.getHand());
+        System.out.println("Dealer final hand: " + dealer.getHand().getTotalValue());
 
         // determine winner
         int playerValue = player.getHand().getTotalValue();
@@ -82,7 +84,7 @@ public class Game {
             return "You lost! The dealer had blackjack";
         }
         else{
-            return "You have a total of " + player.getHand().getTotalValue() + ". Hit or stand?";
+            return "Hit or stand?";
         }
     }
 
