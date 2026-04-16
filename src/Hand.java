@@ -12,12 +12,25 @@ public class Hand{
         hand.add(card);
     }
 
-    public int getTotalValue(){
-        int value = 0;
-        for(int i = 0; i<hand.size(); i++){
-            value = value + hand.get(i).getValue();
+    public int getTotalValue() {
+        int total = 0;
+        int aceCount = 0;
+
+        for (Card card : hand) {
+            total += card.getValue();
+
+            if (card.getRank().equals("A")) {
+            aceCount++;
+            }
         }
-        return value;
+
+        // Adjust Aces from 11 → 1 if needed
+        while (total > 21 && aceCount > 0) {
+            total -= 10; // convert one Ace from 11 → 1
+            aceCount--;
+        }
+
+        return total;
     }
 
     public boolean hasBlackjack(){
@@ -25,6 +38,6 @@ public class Hand{
     }
 
     public String toString(){
-        return "The card dealt is a " + hand.get(hand.size() - 1);
+        return "    " + hand.get(hand.size() - 1);
     }
 }
