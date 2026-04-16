@@ -25,6 +25,6 @@ public class Hand{
     }
 
     public String toString(){
-        return "You have been dealt a " + hand.get(hand.size() - 1);
+        return "The card dealt is a " + hand.get(hand.size() - 1);
     }
 }
