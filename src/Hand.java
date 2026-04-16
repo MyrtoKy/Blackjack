@@ -7,7 +7,8 @@ public class Hand{
     public Hand(){
         hand = new ArrayList<>();
     }
-    public void getCard(Card card){
+
+    public void addCard(Card card){
         hand.add(card);
     }
 
@@ -20,10 +21,7 @@ public class Hand{
     }
 
     public boolean hasBlackjack(){
-        if (getTotalValue() == 21){
-            return true;
-        }
-        return false;
+        return getTotalValue() == 21;
     }
 
     public String toString(){
