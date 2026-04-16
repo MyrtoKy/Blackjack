@@ -20,16 +20,24 @@ public class Card {
         return rank;
     }
 
-    public int returnValue() {
-        if (rank.equals("J") || rank.equals("Q") || rank.equals("K")){
-            return 10;
-        }else if(rank == "A"){
-            return 11;
-        }else{
-            return Integer.parseInt(rank);
+    //return the value of each card 
+    //J,Q,K are 10 points
+    //A is 10 or 11 (implemented in Deck class)
+    //everything else is as is
+    public int getValue() {
+        switch (rank) {
+            case "J":
+            case "Q":
+            case "K":
+                return 10;
+            case "A":
+               return 11;
+             default:
+                return Integer.parseInt(rank);
         }
-    }
+    }   
 
+    @Override
     public String toString() {
         return rank + " of " + suit;
     }
