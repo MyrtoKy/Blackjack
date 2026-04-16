@@ -13,7 +13,23 @@ public class Player{
     public Hand getHand() {
         return hand;
     }
-    
+
+    public double getMoney(){
+        return money;
+    }
+
+    public void setMoney(double m){
+        money += m;
+    }
+
+     public double getBet(){
+        return bet;
+    }
+
+    public void setBet (double newBet){
+        bet = newBet;
+    }
+
     public void hit(Deck deck){
         hand.addCard(deck.dealCard());
         hand.toString();
