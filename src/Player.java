@@ -32,8 +32,10 @@ public class Player{
 
     public void hit(Deck deck){
         hand.addCard(deck.dealCard());
+        System.out.println(hand);
         hand.toString();
-        System.out.println("You now have a total of " + hand.getTotalValue());
+        int total = hand.getTotalValue();
+        System.out.println("You now have a total of " + total);
     }
 
     public String stand(){
