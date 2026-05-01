@@ -14,11 +14,19 @@ public class Player{
         return hand;
     }
 
+    public void resetHand() {
+        this.hand = new Hand();
+    }
+
     public double getMoney(){
         return money;
     }
 
     public void setMoney(double m){
+        money = m;
+    }
+
+    public void addMoney(double m){
         money += m;
     }
 
