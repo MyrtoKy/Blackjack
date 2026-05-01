@@ -6,16 +6,27 @@ public class Game {
     Deck deck;
     boolean playing; 
     int decision;
+    int playAgain;
 
-    public Game(int bet){
-        player = new Player(bet);
-        deck = new Deck();
-        dealer = new Dealer();
-        playing = true;
+    public Game(Player player){
+        this.player = player;
+        this.deck = new Deck();
+        this.dealer = new Dealer();
+        this.playing = true;
     }
 
     public void startGame(){
         Scanner scanner = new Scanner(System.in);
+        this.deck = new Deck();
+        this.dealer = new Dealer();
+        player.resetHand();
+
+        System.out.println("You have " + player.getMoney());
+        System.out.println("Enter your bet:");
+        int bet = scanner.nextInt();
+
+        player.setBet(bet);
+        player.setMoney(player.getMoney() - bet);
 
         // first card is dealt to the player
         player.getHand().addCard(deck.dealCard());
@@ -36,9 +47,9 @@ public class Game {
         System.out.println("You have a total of: " + player.getHand().getTotalValue());
 
         System.out.println(checkForNatural());
-
-        // if blackjack happened, stop
-        if (!playing) return;
+        if (!playing) {
+            return;
+        }
 
         // continue game loop
         while (playing){
@@ -48,7 +59,8 @@ public class Game {
 
             // check if player busts
             if (player.getHand().getTotalValue() > 21){
-                System.out.println("Bust! You lose.");
+                System.out.println("Bust! You lose. You now have " + player.getMoney() + " left.");
+                playing = false;
                 return;
             }
         }
@@ -56,32 +68,30 @@ public class Game {
         // dealer plays
         dealer.playTurn(deck);
         System.out.println("Dealer final hand: " + dealer.getHand().getTotalValue());
-
+        
         // determine winner
         int playerValue = player.getHand().getTotalValue();
         int dealerValue = dealer.getHand().getTotalValue();
-
-        if (dealerValue > 21 || playerValue > dealerValue){
-            System.out.println("You win!");
-        } else if (playerValue < dealerValue){
-            System.out.println("You lose!");
-        } else {
-            System.out.println("It's a tie!");
-        }
+        checkValues(playerValue, dealerValue);
     }
 
     public String checkForNatural(){
         if (player.getHand().hasBlackjack() && !dealer.getHand().hasBlackjack()){
             playing = false;
-            return "You won with Blackjack!";
+            player.addMoney(player.getBet() * 2.5);
+            return "You won with Blackjack! You have " + player.getMoney() + " left.";
         } 
         else if(player.getHand().hasBlackjack() && dealer.getHand().hasBlackjack()){
             playing = false;
-            return "It's a tie!";
+            player.addMoney(player.getBet());
+            return "It's a tie! You have " + player.getMoney() + " left.";
         } 
         else if(dealer.getHand().hasBlackjack()){
             playing = false;
-            return "You lost! The dealer had blackjack";
+            return "You lost! The dealer had blackjack. You have " + player.getMoney() + " left.";
+        }else if(player.getHand().getTotalValue() > 21){
+            playing = false;
+            return "Bust! You lose. You now have " + player.getMoney() + " left.";
         }
         else{
             return "Hit or stand?";
@@ -93,6 +103,26 @@ public class Game {
             player.hit(deck);
         } else {
             System.out.println(player.stand());
+            playing = false;
+        }
+    }
+
+    public void checkValues(int playerValue, int dealerValue){
+        if(playerValue > 21){
+            System.out.println("Bust! You lose. You now have " + player.getMoney() + " left.");
+            playing = false;
+            return;
+        }
+        if (dealerValue > 21 || playerValue > dealerValue){
+            player.addMoney(player.getBet()*2);
+            System.out.println("You win! You now have " + player.getMoney() + " left.");
+            playing = false;
+        } else if (playerValue < dealerValue){
+            System.out.println("You lose! You now have " + player.getMoney() + " left.");
+            playing = false;
+        } else {
+            player.addMoney(player.getBet());
+            System.out.println("It's a tie! You have " + player.getMoney() + " left.");
             playing = false;
         }
     }
