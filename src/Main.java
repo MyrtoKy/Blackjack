@@ -5,10 +5,22 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter your bet:");
-        int bet = scanner.nextInt();
+        Player player = new Player(0); // start with full money
+        boolean playAgain = true;
 
-        Game game = new Game(bet);
-        game.startGame();
+        while (playAgain) {
+
+            Game game = new Game(player);
+            game.startGame();
+
+            System.out.println("\nPlay again? (1 = yes, 2 = no)");
+            int choice = scanner.nextInt();
+
+            if (choice != 1) {
+                playAgain = false;
+            }
+        }
+
+        System.out.println("You leave with: " + player.getMoney());
     }
 }
