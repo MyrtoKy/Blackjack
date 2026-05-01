@@ -25,8 +25,18 @@ public class Game {
         System.out.println("Enter your bet:");
         int bet = scanner.nextInt();
 
+        while(bet>player.getMoney()){
+            System.out.println("You don't have that much money. Please enter a valid bet.");
+            bet = scanner.nextInt();
+        }
+        while(bet<=0){
+            System.out.println("That is not a valid bet. Please enter a valid bet.");
+            bet = scanner.nextInt();
+        }
+
         player.setBet(bet);
         player.setMoney(player.getMoney() - bet);
+        
 
         // first card is dealt to the player
         player.getHand().addCard(deck.dealCard());
@@ -101,6 +111,9 @@ public class Game {
     public void continueGame(int decision){
         if (decision == 1){
             player.hit(deck);
+            if (player.getHand().getTotalValue() == 21){
+                checkValues(player.getHand().getTotalValue(), dealer.getHand().getTotalValue());
+            }
         } else {
             System.out.println(player.stand());
             playing = false;
