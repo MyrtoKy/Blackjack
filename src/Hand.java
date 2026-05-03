@@ -33,8 +33,8 @@ public class Hand{
         return total;
     }
 
-    public boolean hasBlackjack(){
-        return getTotalValue() == 21;
+     public boolean hasBlackjack() {
+        return hand.size() == 2 && getTotalValue() == 21; // must be exactly 2 cards
     }
 
     public String toString(){
